@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/341668__dangthaiduy007__jump-scare-sound.ogg-1700956b7f85c7857dfc0685ad54c198.oggstr"
+
+[deps]
+
+source_file="res://escenas/341668__dangthaiduy007__jump-scare-sound.ogg"
+dest_files=[ "res://.import/341668__dangthaiduy007__jump-scare-sound.ogg-1700956b7f85c7857dfc0685ad54c198.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

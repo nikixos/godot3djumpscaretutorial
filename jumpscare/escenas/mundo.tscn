@@ -1,0 +1,141 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://escenas/Wood_14-512x512.png" type="Texture" id=1]
+[ext_resource path="res://escenas/FPS.tscn" type="PackedScene" id=2]
+[ext_resource path="res://escenas/341668__dangthaiduy007__jump-scare-sound.ogg" type="AudioStream" id=3]
+[ext_resource path="res://escenas/mundo.gd" type="Script" id=4]
+[ext_resource path="res://escenas/manmodel.glb" type="PackedScene" id=5]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+
+[sub_resource type="CubeMesh" id=3]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="Environment" id=8]
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 1, 2.48566, 0.973831 )
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("manmodel:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -2.86803, -2.33607, -7.60332 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("manmodel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "jumpscare"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("manmodel:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 3.64987, -2.33607, -7.60332 ), Vector3( -2.86803, -2.33607, -7.60332 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("manmodel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="mundo" type="Spatial"]
+script = ExtResource( 4 )
+
+[node name="CSGMesh" type="CSGMesh" parent="."]
+transform = Transform( 2.52325, 0, 0, 0, 2.47657, 0, 0, 0, 10.6129, 0, 0, 5.04152 )
+use_collision = true
+mesh = SubResource( 1 )
+material = SubResource( 2 )
+
+[node name="CSGMesh2" type="CSGMesh" parent="CSGMesh"]
+transform = Transform( 0.9745, 0, 0, 0, 0.9751, 0, 0, 0, 0.959274, 0, 0, -0.0542232 )
+operation = 2
+mesh = SubResource( 3 )
+material = SubResource( 4 )
+
+[node name="CSGMesh2" type="CSGMesh" parent="."]
+transform = Transform( -1.10295e-07, 0, 10.6129, 0, 2.53066, 0, -2.52325, 0, -4.63903e-07, 0, 0, -8.14019 )
+use_collision = true
+mesh = SubResource( 1 )
+material = SubResource( 2 )
+
+[node name="CSGMesh2" type="CSGMesh" parent="CSGMesh2"]
+transform = Transform( 0.9745, 0, 0, 0, 0.9751, 0, 0, 0, 0.959274, 0, 0, 0 )
+operation = 2
+mesh = SubResource( 3 )
+material = SubResource( 4 )
+
+[node name="door" type="CSGBox" parent="CSGMesh2"]
+transform = Transform( 1, 0, 1.42109e-14, 0, 1, 0, 3.55271e-15, 0, 1, -0.449484, -0.0183009, -4.67128e-09 )
+operation = 2
+width = 2.031
+height = 1.805
+depth = 0.215
+
+[node name="FPS" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.999555, 0, 0.0298233, 0, 1, 0, -0.0298233, 0, 0.999555, 0, 0, 11.056 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 8 )
+
+[node name="Area" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.30655, 1.40696, -6.25686 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.517172, -1.44904, 1.5466 )
+shape = SubResource( 5 )
+
+[node name="jumpscare" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="manmodel" parent="." instance=ExtResource( 5 )]
+transform = Transform( -0.0199583, 0, -0.399502, 0, 0.4, 0, 0.399502, 0, -0.0199583, -2.86803, -2.33607, -7.60332 )
+visible = false
+
+[node name="AnimationPlayer" parent="manmodel" index="1"]
+autoplay = "walk"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 6 )
+anims/jumpscare = SubResource( 7 )
+
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
+
+[editable path="manmodel"]
